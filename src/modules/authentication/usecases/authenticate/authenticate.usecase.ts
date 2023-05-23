@@ -8,6 +8,4 @@ export class AuthenticationUseCase {
     private eventEmitter: EventEmitter2,
     private prismaService: PrismaService,
   ) {}
-
-  login() {}
 }
