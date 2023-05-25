@@ -1,4 +1,4 @@
 export type CreateUserCompanyDTO = {
-  userId: number;
+  employeeId: number;
   companyId: number;
 };

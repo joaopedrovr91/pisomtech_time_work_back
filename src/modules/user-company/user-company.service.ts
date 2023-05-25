@@ -6,11 +6,11 @@ import { CreateUserCompanyDTO } from './dto/create-user-company.dto';
 export class UserCompanyService {
   constructor(private prisma: PrismaService) {}
   async create(data: CreateUserCompanyDTO) {
-    const usercompany = await this.prisma.userCompany.create({
+    const employeecompany = await this.prisma.userCompany.create({
       data: {
-        user: {
+        employee: {
           connect: {
-            id: data.userId,
+            id: data.employeeId,
           },
         },
         company: {
@@ -20,11 +20,10 @@ export class UserCompanyService {
         },
       },
     });
-    return usercompany;
+    return employeecompany;
   }
 
   async findAll() {
     return await this.prisma.userCompany.findMany();
   }
-
 }

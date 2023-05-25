@@ -1,14 +1,14 @@
 export type CreateLaunchDTO = {
   id: number;
   date: string;
-  startTime: string;
   endTime: string;
+  startTime: string;
   projectName: string;
   projectType: string;
   internal: boolean;
   working: boolean;
   description: string;
   launchedAt: string;
-  userId: number;
+  employeeId: number;
   companyId: number;
 };

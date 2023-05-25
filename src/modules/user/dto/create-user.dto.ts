@@ -1,3 +1,4 @@
+import { EmployeeDTO } from '@modules/employee/dto/employee.dto';
 import { CreateLaunchDTO } from '@modules/launch/dto/create-launch.dto';
 import { CreateUserCompanyDTO } from '@modules/user-company/dto/create-user-company.dto';
 
@@ -8,5 +9,5 @@ export type CreateUserDTO = {
   password: string;
   admin: boolean;
   launches: CreateLaunchDTO[];
-  userCompanies: CreateUserCompanyDTO[];
+  employee: EmployeeDTO;
 };

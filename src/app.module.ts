@@ -7,6 +7,7 @@ import { UserModule } from './modules/user/user.module';
 import { UserCompanyModule } from './modules/user-company/user-company.module';
 import { CompanyModule } from './modules/company/company.module';
 import { LaunchModule } from './modules/launch/launch.module';
+import { AddressModule } from './modules/address/address.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { LaunchModule } from './modules/launch/launch.module';
     UserCompanyModule,
     CompanyModule,
     LaunchModule,
+    AddressModule,
   ],
   controllers: [],
   providers: [],

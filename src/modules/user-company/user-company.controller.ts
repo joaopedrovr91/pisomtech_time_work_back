@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Param,
-  Delete,
-  Put,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body } from '@nestjs/common';
 import { CreateUserCompanyDTO } from './dto/create-user-company.dto';
 import { UserCompanyService } from './user-company.service';
 

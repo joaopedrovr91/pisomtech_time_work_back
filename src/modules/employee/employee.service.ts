@@ -8,12 +8,41 @@ export class EmployeeService {
   async create(data: EmployeeDTO) {
     const employee = await this.prisma.employee.create({
       data: {
+        launches: {
+          create: data.launches.map((launch) => ({
+            date: new Date(launch.date),
+            startTime: new Date(launch.startTime),
+            endTime: new Date(launch.endTime),
+            projectName: launch.projectName,
+            projectType: launch.projectType,
+            internal: launch.internal,
+            working: launch.working,
+            description: launch.description,
+            launchedAt: new Date(launch.launchedAt),
+            companyId: launch.companyId,
+          })),
+        },
+        birthday: new Date(data.birthday),
+        userCompanies: {
+          create: data.userCompanies.map((userCompanie) => ({
+            companyId: userCompanie.id,
+          })),
+        },
+        address: {
+          create: data.address.map((adresses) => ({
+            number: adresses.number,
+            city: adresses.city,
+            road: adresses.road,
+            state: adresses.state,
+            country: adresses.country,
+            complement: adresses.complement,
+          })),
+        },
         user: {
           connect: {
             id: data.id,
           },
         },
-        birthday: new Date(data.birthday),
       },
     });
     return employee;

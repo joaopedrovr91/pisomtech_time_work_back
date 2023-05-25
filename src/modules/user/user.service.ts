@@ -13,6 +13,11 @@ export class UserService {
         email: data.email,
         password: data.password,
         admin: data.admin,
+        employee: {
+          connect: {
+            id: data.employee.id,
+          },
+        },
       },
     });
     return user;

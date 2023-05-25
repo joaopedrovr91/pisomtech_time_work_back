@@ -19,9 +19,9 @@ export class LaunchService {
         startTime: new Date(data.startTime),
         working: data.working,
         internal: data.internal,
-        user: {
+        employee: {
           connect: {
-            id: data.userId,
+            id: data.employeeId,
           },
         },
         company: {
@@ -78,9 +78,9 @@ export class LaunchService {
         startTime: new Date(data.startTime),
         working: data.working,
         internal: data.internal,
-        user: {
+        employee: {
           connect: {
-            id: data.userId,
+            id: data.employeeId,
           },
         },
         company: {
