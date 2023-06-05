@@ -22,8 +22,8 @@ model User {
 }
 
 model Employee {
-  user          User            @relation(fields: [id], references: [id])
-  id            Int             @id
+  user          User            @relation(fields: [userId], references: [id])
+  userId        Int             @map("user_id") @unique             
   birthday      DateTime?       @db.Date()
   address       Address[]       
   addressId     Int?            @unique @map("address_id")            
@@ -40,13 +40,14 @@ model Address {
   state      String     @db.VarChar(244)
   country    String     @db.VarChar(244)
   complement String     @db.VarChar(244)
-  employee   Employee  @relation(fields: [id], references: [id])
+  employee   Employee   @relation(fields: [employeeId], references: [userId])
+  employeeId Int        @map("employee_id")
 
   @@map("t_address")
 }
 
 model UserCompany {
-  employee      Employee    @relation(fields: [employeeId], references: [id])
+  employee      Employee    @relation(fields: [employeeId], references: [userId])
   employeeId    Int         @map("employee_id")
   company       Company     @relation(fields: [companyId], references: [id])
   companyId     Int         @map("company_id")
@@ -77,7 +78,7 @@ model Launch {
   description String   @db.VarChar(500)
   company     Company  @relation(fields: [companyId], references: [id])
   companyId   Int      @map("company_id")
-  employee    Employee @relation(fields: [employeeId], references: [id])
+  employee    Employee @relation(fields: [employeeId], references: [userId])
   employeeId  Int      @map("user_id")
   launchedAt  DateTime @map("launched_at") @db.Timestamp()
 

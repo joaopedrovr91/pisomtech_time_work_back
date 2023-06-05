@@ -6,43 +6,10 @@ export class EmployeeService {
   constructor(private prisma: PrismaService) {}
 
   async create(data: EmployeeDTO) {
+    console.log(data);
     const employee = await this.prisma.employee.create({
       data: {
-        launches: {
-          create: data.launches.map((launch) => ({
-            date: new Date(launch.date),
-            startTime: new Date(launch.startTime),
-            endTime: new Date(launch.endTime),
-            projectName: launch.projectName,
-            projectType: launch.projectType,
-            internal: launch.internal,
-            working: launch.working,
-            description: launch.description,
-            launchedAt: new Date(launch.launchedAt),
-            companyId: launch.companyId,
-          })),
-        },
-        birthday: new Date(data.birthday),
-        userCompanies: {
-          create: data.userCompanies.map((userCompanie) => ({
-            companyId: userCompanie.id,
-          })),
-        },
-        address: {
-          create: data.address.map((adresses) => ({
-            number: adresses.number,
-            city: adresses.city,
-            road: adresses.road,
-            state: adresses.state,
-            country: adresses.country,
-            complement: adresses.complement,
-          })),
-        },
-        user: {
-          connect: {
-            id: data.id,
-          },
-        },
+        userId: data.id,
       },
     });
     return employee;
@@ -55,7 +22,7 @@ export class EmployeeService {
   async update(id: number, data: EmployeeDTO) {
     const employeeExists = await this.prisma.employee.findUnique({
       where: {
-        id,
+        userId: id,
       },
     });
 
@@ -65,10 +32,10 @@ export class EmployeeService {
     return await this.prisma.employee.update({
       data: {
         birthday: new Date(data.birthday),
-        id: data.id,
+        userId: data.id,
       },
       where: {
-        id,
+        userId: id,
       },
     });
   }
@@ -76,7 +43,7 @@ export class EmployeeService {
   async remove(id: number) {
     const employeeExists = await this.prisma.employee.findUnique({
       where: {
-        id,
+        userId: id,
       },
     });
 
@@ -86,7 +53,7 @@ export class EmployeeService {
 
     return await this.prisma.employee.delete({
       where: {
-        id,
+        userId: id,
       },
     });
   }

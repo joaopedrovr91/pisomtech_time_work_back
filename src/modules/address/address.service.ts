@@ -14,7 +14,7 @@ export class AddressService {
         country: data.country,
         road: data.road,
         state: data.state,
-        employee: { connect: { id: data.id } },
+        employee: { connect: { userId: data.userId } },
       },
     });
     return address;
@@ -42,7 +42,7 @@ export class AddressService {
         country: data.country,
         road: data.road,
         state: data.state,
-        employee: { connect: { id: data.id } },
+        employee: { connect: { userId: data.id } },
       },
       where: {
         id,
@@ -63,7 +63,7 @@ export class AddressService {
 
     return await this.prisma.employee.delete({
       where: {
-        id,
+        userId: id,
       },
     });
   }

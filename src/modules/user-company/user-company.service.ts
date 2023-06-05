@@ -10,7 +10,7 @@ export class UserCompanyService {
       data: {
         employee: {
           connect: {
-            id: data.employeeId,
+            userId: data.employeeId,
           },
         },
         company: {

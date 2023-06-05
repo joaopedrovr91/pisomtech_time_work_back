@@ -21,7 +21,7 @@ export class LaunchService {
         internal: data.internal,
         employee: {
           connect: {
-            id: data.employeeId,
+            userId: data.employeeId,
           },
         },
         company: {
@@ -36,6 +36,36 @@ export class LaunchService {
 
   async findAll() {
     return await this.prisma.launch.findMany();
+  }
+
+  async findHistoricAll() {
+    const launchAll = await this.prisma.launch.findMany();
+    const historicAll = launchAll.map((data) => {
+      return {
+        workedHours:
+          (data.endTime.getHours() - data.startTime.getHours()) * 3600 +
+          (data.endTime.getMinutes() - data.startTime.getMinutes()) * 60 +
+          (data.endTime.getSeconds() - data.startTime.getSeconds()),
+        description: data.description,
+        date: data.date,
+      };
+    });
+    return historicAll;
+  }
+
+  async findDayWorkHours() {
+    const launchAll = await this.prisma.launch.findMany();
+    const historicAll = launchAll.map((data) => {
+      return {
+        workedHours:
+          (data.endTime.getHours() - data.startTime.getHours()) * 3600 +
+          (data.endTime.getMinutes() - data.startTime.getMinutes()) * 60 +
+          (data.endTime.getSeconds() - data.startTime.getSeconds()),
+        description: data.description,
+        endTime: new Date(data.endTime),
+        startTime: new Date(data.startTime),
+      };
+    });
   }
 
   async remove(id: number) {
@@ -80,7 +110,7 @@ export class LaunchService {
         internal: data.internal,
         employee: {
           connect: {
-            id: data.employeeId,
+            userId: data.employeeId,
           },
         },
         company: {

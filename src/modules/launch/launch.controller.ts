@@ -25,6 +25,16 @@ export class LaunchController {
     return await this.launchService.findAll();
   }
 
+  @Get('/historic')
+  async findWorkTimeAll() {
+    return await this.launchService.findHistoricAll();
+  }
+
+  @Get('/daywork')
+  async findDayWorkHours() {
+    return await this.launchService.findDayWorkHours();
+  }
+
   @Delete(':id')
   async remove(@Param('id') id: string) {
     return await this.launchService.remove(+id);
