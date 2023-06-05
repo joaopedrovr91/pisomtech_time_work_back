@@ -66,6 +66,7 @@ export class LaunchService {
         startTime: new Date(data.startTime),
       };
     });
+    return historicAll;
   }
 
   async remove(id: number) {

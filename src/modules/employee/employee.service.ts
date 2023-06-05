@@ -10,6 +10,7 @@ export class EmployeeService {
     const employee = await this.prisma.employee.create({
       data: {
         userId: data.id,
+        birthday: new Date(data.birthday),
       },
     });
     return employee;
@@ -29,6 +30,7 @@ export class EmployeeService {
     if (!employeeExists) {
       throw new Error('prestador de serviço não existe');
     }
+
     return await this.prisma.employee.update({
       data: {
         birthday: new Date(data.birthday),
@@ -46,11 +48,9 @@ export class EmployeeService {
         userId: id,
       },
     });
-
     if (!employeeExists) {
       throw new Error('prestador de serviço não existe');
     }
-
     return await this.prisma.employee.delete({
       where: {
         userId: id,

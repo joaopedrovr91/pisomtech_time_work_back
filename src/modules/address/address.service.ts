@@ -14,7 +14,7 @@ export class AddressService {
         country: data.country,
         road: data.road,
         state: data.state,
-        employee: { connect: { userId: data.userId } },
+        employee: { connect: { userId: data.employeeId } },
       },
     });
     return address;
@@ -25,16 +25,10 @@ export class AddressService {
   }
 
   async update(id: number, data: AddressDTO) {
-    const addressExists = await this.prisma.address.findUnique({
+    return await this.prisma.address.update({
       where: {
         id,
       },
-    });
-
-    if (!addressExists) {
-      throw new Error('endereço não existe');
-    }
-    return await this.prisma.address.update({
       data: {
         number: data.number,
         city: data.city,
@@ -44,22 +38,24 @@ export class AddressService {
         state: data.state,
         employee: { connect: { userId: data.id } },
       },
-      where: {
-        id,
-      },
     });
   }
 
   async remove(id: number) {
-    const addressExists = await this.prisma.address.findUnique({
+    console.log('oi');
+    let addressExists = await this.prisma.address.findUnique({
       where: {
         id,
       },
     });
-
     if (!addressExists) {
       throw new Error('endereço não existe');
     }
+    addressExists = await this.prisma.address.delete({
+      where: {
+        id,
+      },
+    });
 
     return await this.prisma.employee.delete({
       where: {

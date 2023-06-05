@@ -6,5 +6,5 @@ export type AddressDTO = {
   state: string;
   country: string;
   complement: string;
-  userId: number;
+  employeeId: number;
 };

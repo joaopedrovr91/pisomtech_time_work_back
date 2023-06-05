@@ -29,6 +29,7 @@
     "@prisma/client": "^4.12.0",
     "@types/moment": "^2.13.0",
     "bcryptjs": "^2.4.3",
+    "common": "^0.2.5",
     "jsonwebtoken": "^9.0.0",
     "moment": "^2.29.1",
     "reflect-metadata": "^0.1.13",
