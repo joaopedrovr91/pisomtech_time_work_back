@@ -30,9 +30,9 @@ export class LaunchController {
     return await this.launchService.findHistoricAll();
   }
 
-  @Get('/daywork')
-  async findDayWorkHours() {
-    return await this.launchService.findDayWorkHours();
+  @Get('/daywork/:id')
+  async findDayWorkHours(@Param('id') id: string) {
+    return await this.launchService.findDayWorkHours(id);
   }
 
   @Delete(':id')

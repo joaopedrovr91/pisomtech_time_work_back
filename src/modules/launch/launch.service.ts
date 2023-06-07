@@ -53,8 +53,12 @@ export class LaunchService {
     return historicAll;
   }
 
-  async findDayWorkHours() {
-    const launchAll = await this.prisma.launch.findMany();
+  async findDayWorkHours(data?: string) {
+    const launchAll = await this.prisma.launch.findMany({
+      where: {
+        date: data ? new Date(data) : undefined,
+      },
+    });
     const historicAll = launchAll.map((data) => {
       return {
         workedHours:
@@ -66,6 +70,7 @@ export class LaunchService {
         startTime: new Date(data.startTime),
       };
     });
+    console.log(data);
     return historicAll;
   }
 
