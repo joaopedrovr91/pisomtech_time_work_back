@@ -4,8 +4,8 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class AuthenticationUseCase {
-  constructor(
+	constructor(
     private eventEmitter: EventEmitter2,
     private prismaService: PrismaService,
-  ) {}
+	) {}
 }

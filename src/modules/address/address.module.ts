@@ -4,7 +4,7 @@ import { AddressController } from './address.controller';
 import { PrismaService } from '@modules/shared/services/prisma/prisma.service';
 
 @Module({
-  controllers: [AddressController],
-  providers: [AddressService, PrismaService],
+	controllers: [AddressController],
+	providers: [AddressService, PrismaService],
 })
 export class AddressModule {}

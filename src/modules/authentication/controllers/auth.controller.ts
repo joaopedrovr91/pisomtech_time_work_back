@@ -3,5 +3,5 @@ import { AuthenticationUseCase } from '../usecases/authenticate/authenticate.use
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authenticationUseCase: AuthenticationUseCase) {}
+	constructor(private authenticationUseCase: AuthenticationUseCase) {}
 }

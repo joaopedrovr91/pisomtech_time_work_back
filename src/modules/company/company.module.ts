@@ -4,7 +4,7 @@ import { CompanyController } from './company.controller';
 import { PrismaService } from '@modules/shared/services/prisma/prisma.service';
 
 @Module({
-  controllers: [CompanyController],
-  providers: [CompanyService, PrismaService],
+	controllers: [CompanyController],
+	providers: [CompanyService, PrismaService],
 })
 export class CompanyModule {}

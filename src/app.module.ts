@@ -10,18 +10,18 @@ import { LaunchModule } from './modules/launch/launch.module';
 import { AddressModule } from './modules/address/address.module';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot(),
-    ManagementModule,
-    AuthenticationModule,
-    EmployeeModule,
-    UserModule,
-    UserCompanyModule,
-    CompanyModule,
-    LaunchModule,
-    AddressModule,
-  ],
-  controllers: [],
-  providers: [],
+	imports: [
+		ConfigModule.forRoot(),
+		ManagementModule,
+		AuthenticationModule,
+		EmployeeModule,
+		UserModule,
+		UserCompanyModule,
+		CompanyModule,
+		LaunchModule,
+		AddressModule,
+	],
+	controllers: [],
+	providers: [],
 })
 export class AppModule {}

@@ -4,7 +4,7 @@ import { LaunchController } from './launch.controller';
 import { PrismaService } from '@modules/shared/services/prisma/prisma.service';
 
 @Module({
-  controllers: [LaunchController],
-  providers: [LaunchService, PrismaService],
+	controllers: [LaunchController],
+	providers: [LaunchService, PrismaService],
 })
 export class LaunchModule {}

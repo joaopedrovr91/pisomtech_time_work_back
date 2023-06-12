@@ -40,7 +40,6 @@ export class AddressService {
       },
     });
   }
-
   async remove(id: number) {
     let addressExists = await this.prisma.address.findUnique({
       where: {

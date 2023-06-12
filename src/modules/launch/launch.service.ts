@@ -1,6 +1,6 @@
 import { PrismaService } from '@modules/shared/services/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
-import moment from 'moment';
+import * as moment from 'moment';
 import { CreateLaunchDTO } from './dto/create-launch.dto';
 
 @Injectable()
@@ -54,24 +54,27 @@ export class LaunchService {
   }
 
   async findDayWorkHours(data?: string) {
-    const launchAll = await this.prisma.launch.findMany({
+    const launches = await this.prisma.launch.findMany({
       where: {
-        date: data ? new Date(data) : undefined,
+        date: moment.utc(data).toDate(),
+      },
+      include: {
+        company: {
+          select: {
+            name: true,
+            imgPath: true,
+          },
+        },
       },
     });
-    const historicAll = launchAll.map((data) => {
-      return {
-        workedHours:
-          (data.endTime.getHours() - data.startTime.getHours()) * 3600 +
-          (data.endTime.getMinutes() - data.startTime.getMinutes()) * 60 +
-          (data.endTime.getSeconds() - data.startTime.getSeconds()),
-        description: data.description,
-        endTime: new Date(data.endTime),
-        startTime: new Date(data.startTime),
-        id: data.id,
-      };
-    });
-    return historicAll;
+
+    return launches.map((launch) => ({
+      ...launch,
+      workedHours:
+        (launch.endTime.getHours() - launch.startTime.getHours()) * 3600 +
+        (launch.endTime.getMinutes() - launch.startTime.getMinutes()) * 60 +
+        (launch.endTime.getSeconds() - launch.startTime.getSeconds()),
+    }));
   }
 
   async remove(id: number) {
