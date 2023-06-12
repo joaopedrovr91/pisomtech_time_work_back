@@ -68,9 +68,9 @@ export class LaunchService {
         description: data.description,
         endTime: new Date(data.endTime),
         startTime: new Date(data.startTime),
+        id: data.id,
       };
     });
-    console.log(data);
     return historicAll;
   }
 
