@@ -38,8 +38,18 @@ export class LaunchService {
     return await this.prisma.launch.findMany();
   }
 
-  async findHistoricAll() {
-    const launchAll = await this.prisma.launch.findMany();
+  async findHistoricAll(data: string) {
+    console.log();
+    const launchAll = await this.prisma.launch.findMany({
+      where: {
+        date: {
+          lte: new Date(moment(data).endOf('month').toDate()),
+          gte: new Date(moment(data).startOf('month').date(1).toDate()),
+        },
+      },
+    });
+    console.log(moment(data).startOf('month').date(1).toDate());
+    console.log(moment(data).endOf('month').toDate());
     const historicAll = launchAll.map((data) => {
       return {
         workedHours:
@@ -50,13 +60,14 @@ export class LaunchService {
         date: data.date,
       };
     });
+    console.log(historicAll);
     return historicAll;
   }
 
   async findDayWorkHours(data?: string) {
     const launches = await this.prisma.launch.findMany({
       where: {
-        date: moment.utc(data).toDate(),
+        date: moment(data).format(),
       },
       include: {
         company: {
