@@ -8,20 +8,24 @@ import { UserCompanyModule } from './modules/user-company/user-company.module';
 import { CompanyModule } from './modules/company/company.module';
 import { LaunchModule } from './modules/launch/launch.module';
 import { AddressModule } from './modules/address/address.module';
+import { EmployeeProjectModule } from './modules/employee-project/employee-project.module';
+import { ProjectModule } from './modules/project/project.module';
 
 @Module({
-	imports: [
-		ConfigModule.forRoot(),
-		ManagementModule,
-		AuthenticationModule,
-		EmployeeModule,
-		UserModule,
-		UserCompanyModule,
-		CompanyModule,
-		LaunchModule,
-		AddressModule,
-	],
-	controllers: [],
-	providers: [],
+  imports: [
+    ConfigModule.forRoot(),
+    ManagementModule,
+    AuthenticationModule,
+    EmployeeModule,
+    UserModule,
+    UserCompanyModule,
+    CompanyModule,
+    LaunchModule,
+    AddressModule,
+    EmployeeProjectModule,
+    ProjectModule,
+  ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

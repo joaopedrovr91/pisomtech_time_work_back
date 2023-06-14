@@ -14,11 +14,13 @@ export class LaunchService {
         description: data.description,
         endTime: new Date(data.endTime),
         launchedAt: new Date(data.launchedAt),
-        projectName: data.projectName,
-        projectType: data.projectType,
         startTime: new Date(data.startTime),
-        working: data.working,
         internal: data.internal,
+        project: {
+          connect: {
+            id: data.projectId,
+          },
+        },
         employee: {
           connect: {
             userId: data.employeeId,
@@ -39,7 +41,6 @@ export class LaunchService {
   }
 
   async findHistoricAll(data: string) {
-    console.log();
     const launchAll = await this.prisma.launch.findMany({
       where: {
         date: {
@@ -48,8 +49,6 @@ export class LaunchService {
         },
       },
     });
-    console.log(moment(data).startOf('month').date(1).toDate());
-    console.log(moment(data).endOf('month').toDate());
     const historicAll = launchAll.map((data) => {
       return {
         workedHours:
@@ -60,7 +59,6 @@ export class LaunchService {
         date: data.date,
       };
     });
-    console.log(historicAll);
     return historicAll;
   }
 
@@ -123,11 +121,13 @@ export class LaunchService {
         description: data.description,
         endTime: new Date(data.endTime),
         launchedAt: new Date(data.launchedAt),
-        projectName: data.projectName,
-        projectType: data.projectType,
         startTime: new Date(data.startTime),
-        working: data.working,
         internal: data.internal,
+        project: {
+          connect: {
+            id: data.projectId,
+          },
+        },
         employee: {
           connect: {
             userId: data.employeeId,

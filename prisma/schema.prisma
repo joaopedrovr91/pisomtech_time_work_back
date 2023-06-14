@@ -11,57 +11,70 @@ datasource db {
 }
 
 model User {
-  id            Int        @id @default(autoincrement())
-  name          String     @db.VarChar(244)
-  email         String     @db.VarChar(244)
-  password      String     @db.VarChar(244)
-  admin         Boolean    @default(false)
-  employee      Employee?
+  id       Int       @id @default(autoincrement())
+  name     String    @db.VarChar(244)
+  email    String    @db.VarChar(244)
+  password String    @db.VarChar(244)
+  admin    Boolean   @default(false)
+  employee Employee?
 
   @@map("t_user")
 }
 
-model Employee {
-  user          User            @relation(fields: [userId], references: [id])
-  userId        Int             @map("user_id") @unique             
-  birthday      DateTime?       @db.Date()
-  address       Address[]       
-  addressId     Int?            @unique @map("address_id")            
-  userCompanies UserCompany[]   
-  launches      Launch[]
-  @@map("t_employee")
-}
-
 model Address {
-  id         Int        @id @default(autoincrement())
-  number     String     @db.VarChar(244)
-  road       String     @db.VarChar(244)
-  city       String     @db.VarChar(244)
-  state      String     @db.VarChar(244)
-  country    String     @db.VarChar(244)
-  complement String     @db.VarChar(244)
-  employee   Employee?   @relation(fields: [employeeId], references: [userId])
-  employeeId Int        @map("employee_id")
+  id         Int       @id @default(autoincrement())
+  number     String    @db.VarChar(244)
+  road       String    @db.VarChar(244)
+  city       String    @db.VarChar(244)
+  state      String    @db.VarChar(244)
+  country    String    @db.VarChar(244)
+  complement String    @db.VarChar(244)
+  employee   Employee? @relation(fields: [employeeId], references: [userId])
+  employeeId Int       @map("employee_id")
 
   @@map("t_address")
 }
 
 model UserCompany {
-  employee      Employee    @relation(fields: [employeeId], references: [userId])
-  employeeId    Int         @map("employee_id")
-  company       Company     @relation(fields: [companyId], references: [id])
-  companyId     Int         @map("company_id")
+  employee   Employee @relation(fields: [employeeId], references: [userId])
+  employeeId Int      @map("employee_id")
+  company    Company  @relation(fields: [companyId], references: [id])
+  companyId  Int      @map("company_id")
 
   @@id([employeeId, companyId])
   @@map("t_user_company")
 }
 
+model EmployeeProject {
+  employee   Employee @relation(fields: [employeeId], references: [userId])
+  employeeId Int      @map("employee_id")
+  project    Project  @relation(fields: [projectId], references: [id])
+  projectId  Int      @map("project_id")
+
+  @@id([employeeId, projectId])
+  @@map("t_user_project")
+}
+
+model Employee {
+  user             User              @relation(fields: [userId], references: [id])
+  userId           Int               @unique @map("user_id")
+  birthday         DateTime?         @db.Date()
+  address          Address[]
+  addressId        Int?              @unique @map("address_id")
+  userCompanies    UserCompany[]
+  launches         Launch[]
+  employeeProjects EmployeeProject[]
+
+  @@map("t_employee")
+}
+
 model Company {
-  id           Int        @id @default(autoincrement())
-  name         String     @db.VarChar(244)
-  imgPath      String     @map("img_path") @db.VarChar(344)
+  id           Int           @id @default(autoincrement())
+  name         String        @db.VarChar(244)
+  imgPath      String        @map("img_path") @db.VarChar(344)
   launches     Launch[]
   companyUsers UserCompany[]
+  Project      Project[]
 
   @@map("t_company")
 }
@@ -71,16 +84,25 @@ model Launch {
   date        DateTime @db.Date()
   startTime   DateTime @map("start_time") @db.Time()
   endTime     DateTime @map("end_time") @db.Time()
-  projectName String   @map("project_name") @db.VarChar(244)
-  projectType String   @map("project_type") @db.VarChar(244)
   internal    Boolean  @default(false)
-  working     Boolean  @default(true)
   description String   @db.VarChar(500)
   company     Company  @relation(fields: [companyId], references: [id])
   companyId   Int      @map("company_id")
   employee    Employee @relation(fields: [employeeId], references: [userId])
   employeeId  Int      @map("user_id")
+  project     Project  @relation(fields: [projectId], references: [id])
+  projectId   Int      @map("project_id")
   launchedAt  DateTime @map("launched_at") @db.Timestamp()
 
   @@map("t_launch")
+}
+
+model Project {
+  id          Int               @id @default(autoincrement())
+  projectName String            @map("project_name") @db.VarChar(244)
+  projectType String            @map("project_type") @db.VarChar(244)
+  Employees   EmployeeProject[]
+  company     Company           @relation(fields: [companyId], references: [id])
+  companyId   Int               @map("company_id")
+  Launch      Launch[]
 }
