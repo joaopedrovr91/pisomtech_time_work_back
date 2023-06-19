@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
 import { CompanyService } from './company.service';
 import { CreateCompanyDTO } from './dto/create-company.dto';
 
@@ -6,7 +6,7 @@ import { CreateCompanyDTO } from './dto/create-company.dto';
 export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
 
-  @Post() add;
+  @Post()
   async create(@Body() data: CreateCompanyDTO) {
     return await this.companyService.create(data);
   }

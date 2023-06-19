@@ -8,13 +8,20 @@ export class LaunchService {
   constructor(private prisma: PrismaService) {}
 
   async create(data: CreateLaunchDTO) {
+    const startTime = new Date(data.startTime);
+    const endTime = new Date(data.endTime);
+
+    if (endTime <= startTime) {
+      throw new Error(' A hora de término da atividade deve ser posterior à hora de início da mesma');
+    }
+
     const launch = await this.prisma.launch.create({
       data: {
         date: new Date(data.date),
         description: data.description,
-        endTime: new Date(data.endTime),
+        endTime: endTime,
         launchedAt: new Date(data.launchedAt),
-        startTime: new Date(data.startTime),
+        startTime: startTime,
         internal: data.internal,
         project: {
           connect: {
@@ -33,6 +40,7 @@ export class LaunchService {
         },
       },
     });
+
     return launch;
   }
 
@@ -49,16 +57,47 @@ export class LaunchService {
         },
       },
     });
-    const historicAll = launchAll.map((data) => {
-      return {
-        workedHours:
-          (data.endTime.getHours() - data.startTime.getHours()) * 3600 +
-          (data.endTime.getMinutes() - data.startTime.getMinutes()) * 60 +
-          (data.endTime.getSeconds() - data.startTime.getSeconds()),
-        description: data.description,
-        date: data.date,
-      };
+
+    const historicAll = launchAll.reduce((acc, data) => {
+      const existingItem = acc.find((item) => {
+        const dateA = new Date(item.date);
+        const dateB = new Date(data.date);
+        return (
+          dateA.getDate() === dateB.getDate() &&
+          dateA.getMonth() === dateB.getMonth() &&
+          dateA.getFullYear() === dateB.getFullYear()
+        );
+      });
+
+      const workedHours =
+        (data.endTime.getHours() - data.startTime.getHours()) * 3600 +
+        (data.endTime.getMinutes() - data.startTime.getMinutes()) * 60 +
+        (data.endTime.getSeconds() - data.startTime.getSeconds());
+
+      if (existingItem) {
+        existingItem.workedHours += workedHours;
+      } else {
+        acc.push({
+          workedHours,
+          description: data.description,
+          date: data.date,
+        });
+      }
+
+      return acc;
+    }, []);
+
+    historicAll.sort((a, b) => {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      return dateA.getTime() - dateB.getTime();
     });
+
+    const hasNegativeWorkedHours = historicAll.some((item) => item.workedHours < 0);
+    if (hasNegativeWorkedHours) {
+      throw new Error('Você colocou hora negativa de trabalho, não e permitido');
+    }
+
     return historicAll;
   }
 
@@ -143,5 +182,14 @@ export class LaunchService {
         id,
       },
     });
+  }
+
+  async findOneLaunch(id: number) {
+    const allLaunch = await this.prisma.launch.findUnique({
+      where: {
+        id,
+      },
+    });
+    return allLaunch;
   }
 }

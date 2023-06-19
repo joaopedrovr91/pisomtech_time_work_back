@@ -26,6 +26,11 @@ export class LaunchController {
     return await this.launchService.findDayWorkHours(id);
   }
 
+  @Get('/:id')
+  async findOneLaunch(@Param('id') id: string) {
+    return await this.launchService.findOneLaunch(+id);
+  }
+
   @Delete(':id')
   async remove(@Param('id') id: string) {
     return await this.launchService.remove(+id);
