@@ -26,8 +26,8 @@ export class CompanyController {
     return await this.companyService.update(+id, data);
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   // return this.companyService.findOne(+id);
-  // }
+  @Get('/:id')
+  async findOneCompany(@Param('id') id: string) {
+    return await this.companyService.findOneCompany(+id);
+  }
 }

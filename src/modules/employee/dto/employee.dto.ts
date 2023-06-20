@@ -5,6 +5,7 @@ import { CreateLaunchDTO } from '@modules/launch/dto/create-launch.dto';
 export type EmployeeDTO = {
   id: number;
   birthday?: string;
+  imgEmployee?: string;
   launches?: CreateLaunchDTO[];
   userCompanies?: CreateCompanyDTO[];
   address?: AddressDTO[];
