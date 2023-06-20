@@ -1,12 +1,23 @@
 import { AddressDTO } from '@modules/address/dto/create-address.dto';
 import { CreateCompanyDTO } from '@modules/company/dto/create-company.dto';
 import { CreateLaunchDTO } from '@modules/launch/dto/create-launch.dto';
+import { Transform } from 'class-transformer';
+import { IsDate, IsNumber, IsPositive, IsString } from 'class-validator';
 
-export type EmployeeDTO = {
+export class EmployeeDTO {
+  @IsNumber()
+  @IsPositive()
   id: number;
-  birthday?: string;
+  @IsDate()
+  @Transform(({ value }) => new Date(value))
+  birthday?: Date;
+
+  @IsString()
   imgEmployee?: string;
+
   launches?: CreateLaunchDTO[];
+
   userCompanies?: CreateCompanyDTO[];
+  
   address?: AddressDTO[];
 };

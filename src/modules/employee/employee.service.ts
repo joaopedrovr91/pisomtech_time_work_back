@@ -10,7 +10,7 @@ export class EmployeeService {
       data: {
         imgEmployee: data.imgEmployee,
         userId: data.id,
-        birthday: new Date(data.birthday),
+        birthday: data.birthday,
       },
     });
     return employee;

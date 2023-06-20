@@ -1,7 +1,8 @@
 import { PrismaService } from '@modules/shared/services/prisma/prisma.service';
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import * as moment from 'moment';
 import { CreateLaunchDTO } from './dto/create-launch.dto';
+import { KnownException } from '@config/exceptions/known.exception';
 
 @Injectable()
 export class LaunchService {
@@ -12,7 +13,7 @@ export class LaunchService {
     const endTime = new Date(data.endTime);
 
     if (endTime <= startTime) {
-      throw new Error(' A hora de término da atividade deve ser posterior à hora de início da mesma');
+      throw new KnownException(true, 'A hora de término da atividade deve ser posterior à hora de início da mesma', HttpStatus.BAD_REQUEST);
     }
 
     const launch = await this.prisma.launch.create({
@@ -95,7 +96,7 @@ export class LaunchService {
 
     const hasNegativeWorkedHours = historicAll.some((item) => item.workedHours < 0);
     if (hasNegativeWorkedHours) {
-      throw new Error('Você colocou hora negativa de trabalho, não e permitido');
+      throw new KnownException(false, 'Você colocou hora negativa de trabalho, não e permitido', HttpStatus.BAD_REQUEST);
     }
 
     return historicAll;
