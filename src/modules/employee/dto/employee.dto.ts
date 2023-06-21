@@ -15,6 +15,8 @@ export class EmployeeDTO {
   @IsString()
   imgEmployee?: string;
 
+  phoneNumber: string;
+
   launches?: CreateLaunchDTO[];
 
   userCompanies?: CreateCompanyDTO[];

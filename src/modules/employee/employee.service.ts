@@ -11,6 +11,7 @@ export class EmployeeService {
         imgEmployee: data.imgEmployee,
         userId: data.id,
         birthday: data.birthday,
+        phoneNumber: data.phoneNumber,
       },
     });
     return employee;
@@ -36,6 +37,7 @@ export class EmployeeService {
         imgEmployee: data.imgEmployee,
         birthday: new Date(data.birthday),
         userId: data.id,
+        phoneNumber: data.phoneNumber,
       },
       where: {
         userId: id,
@@ -58,4 +60,5 @@ export class EmployeeService {
       },
     });
   }
+
 }

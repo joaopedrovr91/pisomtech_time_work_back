@@ -60,6 +60,7 @@ model Employee {
   userId           Int               @unique @map("user_id")
   birthday         DateTime          @db.Date()
   imgEmployee      String            @map("img_employee")
+  phoneNumber      String            @db.VarChar(244) 
   address          Address[]
   addressId        Int?              @unique @map("address_id")
   userCompanies    UserCompany[]
@@ -73,6 +74,8 @@ model Company {
   id           Int           @id @default(autoincrement())
   name         String        @db.VarChar(244)
   imgPath      String        @map("img_path") @db.VarChar(344)
+  email        String        @db.VarChar(244)
+  phoneNumber  String        @db.VarChar(244) 
   launches     Launch[]
   companyUsers UserCompany[]
   Project      Project[]

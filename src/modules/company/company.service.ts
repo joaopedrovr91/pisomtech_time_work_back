@@ -6,14 +6,19 @@ import { CreateCompanyDTO } from './dto/create-company.dto';
 export class CompanyService {
   constructor(private prisma: PrismaService) {}
   async create(data: CreateCompanyDTO) {
-    const company = await this.prisma.company.create({
-      data: {
-        name: data.name,
-        imgPath: data.imgPath,
+  const company = await this.prisma.company.create({
+    data: {
+      name: data.name,
+      email: data.email,
+      imgPath: data.imgPath,
+      phoneNumber: data.phoneNumber,
+      companyUsers: {
+        create: data.companyUsers,
       },
-    });
-    return company;
-  }
+    },
+  });
+  return company;
+}
 
   async findAll() {
     return await this.prisma.company.findMany();
@@ -42,7 +47,9 @@ export class CompanyService {
     return await this.prisma.company.update({
       data: {
         imgPath: data.imgPath,
+        email: data.email,
         name: data.name,
+        phoneNumber: data.phoneNumber,
       },
       where: {
         id,
@@ -66,5 +73,13 @@ export class CompanyService {
         id,
       },
     });
+  }
+
+  async saveImage(file: any): Promise<string> {
+    const imgPath = '/path/to/save/image/' + file.originalname;
+    // Use o Prisma para salvar o caminho da imagem no banco de dados, se necessário
+    // await this.prisma.imagem.create({ data: { imgPath } });
+
+    return imgPath;
   }
 }

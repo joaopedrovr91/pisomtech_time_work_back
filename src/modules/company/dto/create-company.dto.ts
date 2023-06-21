@@ -5,6 +5,8 @@ export type CreateCompanyDTO = {
   id: number;
   name: string;
   imgPath: string;
+  email: string;
+  phoneNumber: string;
   launches: CreateLaunchDTO[];
   companyUsers: CreateUserCompanyDTO[];
 };

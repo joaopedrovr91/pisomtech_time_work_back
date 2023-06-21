@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { CompanyService } from './company.service';
 import { CreateCompanyDTO } from './dto/create-company.dto';
 
@@ -7,8 +8,20 @@ export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
 
   @Post()
-  async create(@Body() data: CreateCompanyDTO) {
-    return await this.companyService.create(data);
+  async create(@Body() data: CreateCompanyDTO, @UploadedFile() file: any): Promise<any> {
+    const imgPath = await this.companyService.saveImage(file);
+  
+    const createData: CreateCompanyDTO = {
+      id: data.id,
+      name: data.name,
+      imgPath: imgPath,
+      email: data.email,
+      phoneNumber: data.phoneNumber,
+      launches: data.launches,
+      companyUsers: data.companyUsers,
+    };
+  
+    return await this.companyService.create(createData);
   }
 
   @Get()
