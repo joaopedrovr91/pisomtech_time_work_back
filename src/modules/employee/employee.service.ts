@@ -8,9 +8,8 @@ export class EmployeeService {
   async create(data: EmployeeDTO) {
     const employee = await this.prisma.employee.create({
       data: {
-        imgEmployee: data.imgEmployee,
         userId: data.id,
-        birthday: data.birthday,
+        birthday: new Date(data.birthday),
         phoneNumber: data.phoneNumber,
       },
     });
@@ -18,8 +17,28 @@ export class EmployeeService {
   }
 
   async findAll() {
-    return await this.prisma.employee.findMany();
-  }
+    return await this.prisma.employee.findMany({
+      include: {
+        user: {
+          select: {
+            email: true,
+            name: true,
+            admin: true
+          }
+        },
+        userCompanies: {
+          select: {
+            company : {
+              select : {
+                nameCompany: true,
+              }
+            }
+          }
+        }
+      },
+      
+  });
+}
 
   async update(id: number, data: EmployeeDTO) {
     const employeeExists = await this.prisma.employee.findUnique({
@@ -34,7 +53,6 @@ export class EmployeeService {
 
     return await this.prisma.employee.update({
       data: {
-        imgEmployee: data.imgEmployee,
         birthday: new Date(data.birthday),
         userId: data.id,
         phoneNumber: data.phoneNumber,

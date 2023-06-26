@@ -110,8 +110,7 @@ export class LaunchService {
       include: {
         company: {
           select: {
-            name: true,
-            imgPath: true,
+            nameCompany: true,
           },
         },
       },

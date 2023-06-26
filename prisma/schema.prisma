@@ -13,7 +13,7 @@ datasource db {
 model User {
   id       Int       @id @default(autoincrement())
   name     String    @db.VarChar(244)
-  email    String    @db.VarChar(244)
+  email    String    @db.VarChar(244) @unique
   password String    @db.VarChar(244)
   admin    Boolean   @default(false)
   employee Employee?
@@ -59,7 +59,6 @@ model Employee {
   user             User              @relation(fields: [userId], references: [id])
   userId           Int               @unique @map("user_id")
   birthday         DateTime          @db.Date()
-  imgEmployee      String            @map("img_employee")
   phoneNumber      String            @db.VarChar(244) 
   address          Address[]
   addressId        Int?              @unique @map("address_id")
@@ -72,8 +71,7 @@ model Employee {
 
 model Company {
   id           Int           @id @default(autoincrement())
-  name         String        @db.VarChar(244)
-  imgPath      String        @map("img_path") @db.VarChar(344)
+  nameCompany  String        @db.VarChar(244)
   email        String        @db.VarChar(244)
   phoneNumber  String        @db.VarChar(244) 
   launches     Launch[]

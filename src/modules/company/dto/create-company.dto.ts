@@ -3,7 +3,7 @@ import { CreateUserCompanyDTO } from '@modules/user-company/dto/create-user-comp
 
 export type CreateCompanyDTO = {
   id: number;
-  name: string;
+  nameCompany: string;
   imgPath: string;
   email: string;
   phoneNumber: string;

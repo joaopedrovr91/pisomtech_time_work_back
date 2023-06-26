@@ -8,20 +8,8 @@ export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
 
   @Post()
-  async create(@Body() data: CreateCompanyDTO, @UploadedFile() file: any): Promise<any> {
-    const imgPath = await this.companyService.saveImage(file);
-  
-    const createData: CreateCompanyDTO = {
-      id: data.id,
-      name: data.name,
-      imgPath: imgPath,
-      email: data.email,
-      phoneNumber: data.phoneNumber,
-      launches: data.launches,
-      companyUsers: data.companyUsers,
-    };
-  
-    return await this.companyService.create(createData);
+  async create(@Body() data: CreateCompanyDTO): Promise<any> {
+    return await this.companyService.create(data);
   }
 
   @Get()

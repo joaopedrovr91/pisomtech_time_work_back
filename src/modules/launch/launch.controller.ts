@@ -16,14 +16,14 @@ export class LaunchController {
     return await this.launchService.findAll();
   }
 
-  @Get('/historic/:data')
-  async findWorkTimeAll(@Param('data') data: string) {
-    return await this.launchService.findHistoricAll(data);
+  @Get('/historic/:date')
+  async findWorkTimeAll(@Param('date') date: string) {
+    return await this.launchService.findHistoricAll(date);
   }
 
-  @Get('/daywork/:id')
-  async findDayWorkHours(@Param('id') id: string) {
-    return await this.launchService.findDayWorkHours(id);
+  @Get('/daywork/:date')
+  async findDayWorkHours(@Param('date') date: string) {
+    return await this.launchService.findDayWorkHours(date);
   }
 
   @Get('/:id')

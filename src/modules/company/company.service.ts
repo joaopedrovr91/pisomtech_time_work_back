@@ -8,10 +8,9 @@ export class CompanyService {
   async create(data: CreateCompanyDTO) {
   const company = await this.prisma.company.create({
     data: {
-      name: data.name,
+      nameCompany: data.nameCompany,
       email: data.email,
-      imgPath: data.imgPath,
-      phoneNumber: data.phoneNumber,
+      phoneNumber: data.phoneNumber, 
       companyUsers: {
         create: data.companyUsers,
       },
@@ -46,9 +45,8 @@ export class CompanyService {
 
     return await this.prisma.company.update({
       data: {
-        imgPath: data.imgPath,
         email: data.email,
-        name: data.name,
+        nameCompany: data.nameCompany,
         phoneNumber: data.phoneNumber,
       },
       where: {
@@ -73,13 +71,5 @@ export class CompanyService {
         id,
       },
     });
-  }
-
-  async saveImage(file: any): Promise<string> {
-    const imgPath = '/path/to/save/image/' + file.originalname;
-    // Use o Prisma para salvar o caminho da imagem no banco de dados, se necessário
-    // await this.prisma.imagem.create({ data: { imgPath } });
-
-    return imgPath;
   }
 }
