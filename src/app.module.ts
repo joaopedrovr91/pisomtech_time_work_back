@@ -10,6 +10,9 @@ import { LaunchModule } from './modules/launch/launch.module';
 import { AddressModule } from './modules/address/address.module';
 import { EmployeeProjectModule } from './modules/employee-project/employee-project.module';
 import { ProjectModule } from './modules/project/project.module';
+import { AuthModule } from './auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 
 @Module({
   imports: [
@@ -24,8 +27,12 @@ import { ProjectModule } from './modules/project/project.module';
     AddressModule,
     EmployeeProjectModule,
     ProjectModule,
+    AuthModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [AppModule, {
+    provide: APP_GUARD,
+    useClass: JwtAuthGuard,
+  },],
 })
 export class AppModule {}
