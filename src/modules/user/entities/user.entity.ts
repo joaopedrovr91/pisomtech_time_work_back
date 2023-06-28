@@ -7,6 +7,5 @@ export class User {
     email: string;
     password: string;
     admin: boolean;
-    launches?: CreateLaunchDTO[];
     employee?: EmployeeDTO;
   }
