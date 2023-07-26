@@ -1,5 +1,5 @@
 export class UserFromJwt {
-    id: string;
+    id: number;
     email: string;
     name: string;
     admin: boolean;
