@@ -15,14 +15,5 @@ export class EmployeeProjectController {
   async findAll() {
     return await this.employeeProjectService.findAll();
   }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.employeeProjectService.findOne(+id);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.employeeProjectService.remove(+id);
-  // }
+  
 }

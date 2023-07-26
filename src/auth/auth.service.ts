@@ -6,12 +6,14 @@ import { User } from '@modules/user/entities/user.entity';
 import { UserPayload } from './models/UserPayload';
 import { JwtService } from '@nestjs/jwt';
 import { UserToken } from './models/UserToken';
+import { LoginRequestBody } from './models/LoginRequestBody';
 
 @Injectable()
 export class AuthService {
     constructor (private readonly userService: UserService, private readonly jwtService: JwtService) {}
 
-    login(user: User): UserToken {
+    async login(req: LoginRequestBody): Promise<UserToken> {
+        const user = await this.validateUser(req.email, req.password)
         const payload: UserPayload = {
             sub: user.id,
             email: user.email,

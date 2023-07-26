@@ -4,7 +4,6 @@ import { CreateUserCompanyDTO } from '@modules/user-company/dto/create-user-comp
 export type CreateCompanyDTO = {
   id: number;
   nameCompany: string;
-  imgPath: string;
   email: string;
   phoneNumber: string;
   launches: CreateLaunchDTO[];

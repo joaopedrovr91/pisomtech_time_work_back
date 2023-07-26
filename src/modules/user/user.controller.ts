@@ -1,20 +1,16 @@
-  import { Controller, Get, Post, Body } from '@nestjs/common';
+  import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
   import { UserService } from './user.service';
   import { CreateUserDTO } from './dto/create-user.dto';
-  import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
-  import { User } from '@prisma/client';
+  import { IsPublic } from 'src/auth/decorators/isPublic.decorator';
+import { LocalAuthGuard } from 'src/auth/guards/local-auth.guard';
 
   @Controller('user')
   export class UserController {
     constructor(private readonly userService: UserService) {}
 
+    @UseGuards(LocalAuthGuard)
     @Post()
     create(@Body() data: CreateUserDTO) {
       return this.userService.create(data);
-    }
-
-    @Get('me')
-    getMe(@CurrentUser() user : User){
-      return user;
     }
   }

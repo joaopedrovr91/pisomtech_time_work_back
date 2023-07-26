@@ -8,18 +8,15 @@ export class EmployeeDTO {
   @IsNumber()
   @IsPositive()
   id: number;
+
   @IsDate()
   @Transform(({ value }) => new Date(value))
   birthday?: Date;
 
-  @IsString()
-  imgEmployee?: string;
-
+  @IsString() // Certifique-se de que phoneNumber seja uma string
   phoneNumber: string;
 
   launches?: CreateLaunchDTO[];
-
   userCompanies?: CreateCompanyDTO[];
-  
   address?: AddressDTO[];
-};
+}

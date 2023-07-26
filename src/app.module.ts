@@ -1,4 +1,3 @@
-import { AuthenticationModule } from '@modules/authentication/authentication.module';
 import { EmployeeModule } from '@modules/employee/employee.module';
 import { ManagementModule } from '@modules/management/management.module';
 import { Module } from '@nestjs/common';
@@ -11,14 +10,11 @@ import { AddressModule } from './modules/address/address.module';
 import { EmployeeProjectModule } from './modules/employee-project/employee-project.module';
 import { ProjectModule } from './modules/project/project.module';
 import { AuthModule } from './auth/auth.module';
-import { APP_GUARD } from '@nestjs/core';
-import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     ManagementModule,
-    AuthenticationModule,
     EmployeeModule,
     UserModule,
     UserCompanyModule,
@@ -30,9 +26,6 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
     AuthModule,
   ],
   controllers: [],
-  providers: [AppModule, {
-    provide: APP_GUARD,
-    useClass: JwtAuthGuard,
-  },],
+  providers: [AppModule],
 })
 export class AppModule {}
